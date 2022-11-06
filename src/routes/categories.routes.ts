@@ -5,6 +5,7 @@ import { createCategoryController } from '../modules/cars/useCases/createCategor
 import { CreateCategoryService } from '../modules/cars/useCases/createCategory/CreateCategoryUseCase'
 import { ListCategoriesController } from '../modules/cars/useCases/listCategories'
 import multer from 'multer'
+import { importCategoryController } from '../modules/cars/useCases/importCategory'
 
 const upload = multer({ dest: './tmp' })
 
@@ -17,8 +18,6 @@ categoriesRoutes.get('/', (req, res) => {
   return ListCategoriesController.handle(req, res)
 })
 categoriesRoutes.post('/import', upload.single('file'), (req, res) => {
-  const { file } = req
-  console.log(file)
-  return res.send()
+  return importCategoryController.handle(req, res)
 })
 export { categoriesRoutes }
