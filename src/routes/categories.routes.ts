@@ -4,6 +4,10 @@ import { CategoriesRepository } from '../modules/cars/repositories/implementatio
 import { createCategoryController } from '../modules/cars/useCases/createCategory'
 import { CreateCategoryService } from '../modules/cars/useCases/createCategory/CreateCategoryUseCase'
 import { ListCategoriesController } from '../modules/cars/useCases/listCategories'
+import multer from 'multer'
+
+const upload = multer({ dest: './tmp' })
+
 const categoriesRoutes = Router()
 
 categoriesRoutes.post('/', (req, res) => {
@@ -11,5 +15,10 @@ categoriesRoutes.post('/', (req, res) => {
 })
 categoriesRoutes.get('/', (req, res) => {
   return ListCategoriesController.handle(req, res)
+})
+categoriesRoutes.post('/import', upload.single('file'), (req, res) => {
+  const { file } = req
+  console.log(file)
+  return res.send()
 })
 export { categoriesRoutes }
