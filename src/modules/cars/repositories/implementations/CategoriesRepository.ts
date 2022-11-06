@@ -1,14 +1,25 @@
-import { Category } from '../model/Category'
+import { Category } from '../../model/Category'
 
 interface ICreateCategoryDTO {
   name: string
   description: string
 }
+
+//singleton
+
 class CategoriesRepository {
   private categories: Category[]
 
-  constructor() {
+  private static INSTANCE: CategoriesRepository
+  private constructor() {
     this.categories = []
+  }
+
+  public static getInstance(): any {
+    if (!CategoriesRepository.INSTANCE) {
+      CategoriesRepository.INSTANCE = new CategoriesRepository()
+    }
+    return CategoriesRepository.INSTANCE
   }
 
   create({ name, description }: ICreateCategoryDTO) {
